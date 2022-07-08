@@ -81,7 +81,6 @@ function handleClickNewCatForm(event) {
     }
 }
 
-
 //Adicionar nuevo gatito
 function addNewKitten(event) {
     event.preventDefault();
@@ -101,12 +100,15 @@ function addNewKitten(event) {
         
     }
 }
-
-function newKitten(newKittenDataObject) {
+function emptyInputs() {
     inputPhoto.value = '';
     inputName.value = '';
     inputRace.value = '';
     inputDesc.value = '';
+}
+
+function newKitten(newKittenDataObject) {
+    emptyInputs();
     labelMesageError.innerHTML = 'Mola! Un nuevo gatito en Adalab!';
     kittenDataList.push(newKittenDataObject);
     renderKittenList(kittenDataList);
