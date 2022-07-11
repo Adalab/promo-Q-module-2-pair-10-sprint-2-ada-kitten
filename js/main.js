@@ -14,25 +14,26 @@ const inputRace = document.querySelector('.js-input-race');
 const linkNewFormElememt = document.querySelector('.js-button-new-form');
 const labelMesageError = document.querySelector('.js-label-error');
 const input_search_desc = document.querySelector('.js_in_search_desc');
+const input_search_race = document.querySelector('.js_in_search_race');
 
 
 //Objetos con cada gatito
 const kittenData_1 = {
     image: "https://ychef.files.bbci.co.uk/976x549/p07ryyyj.jpg",
     name: "Anastacio",
-    desc: "Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
+    desc: "Risueño, le gusta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
     race: "British Shorthair",
 };
 const kittenData_2 = {
     image: "https://media-cldnry.s-nbcnews.com/image/upload/t_nbcnews-fp-1200-630,f_auto,q_auto:best/newscms/2019_39/3021711/190923-cat-pet-stock-cs-1052a.jpg",
     name: "Fiona",
-    desc: "Juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
-    race: "British Shorthair",
+    desc: "Juguetón, le gusta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
+    race: "Persa",
 };
 const kittenData_3 = {
     image: "https://images.emedicinehealth.com/images/article/main_image/cat-scratch-disease.jpg",
     name: "Cielo",
-    desc: "Ruiseño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
+    desc: "Risueño, juguetón, le guta estar tranquilo y que nadie le moleste. Es una maravilla acariciarle!",
     race: "British Shorthair",
 };
 
@@ -127,20 +128,23 @@ function cancelNewKitten(event) {
 function filterKitten(event) {
     event.preventDefault();
     const descrSearchText = input_search_desc.value;
+    const raceSearchText = input_search_race.value;
     listElement.innerHTML = "";
-    for (const kittenItem of kittenDataList) {
-        if (kittenItem.desc.includes(descrSearchText)) {
-            listElement.innerHTML += renderKitten(kittenItem);
-        }
-    }
+
+    const filterCats = kittenDataList
+    .filter((oneCat) => oneCat.desc.toLowerCase().includes(descrSearchText.toLowerCase())) 
+    .filter ((oneCat) => oneCat.race.toLowerCase().includes(raceSearchText.toLowerCase()));
+    renderKittenList(filterCats);
 }
 
+
+
 //Mostrar el litado de gatitos en ell HTML
-renderKittenList(kittenDataList);
+renderKittenList(kittenDataList); 
 
 //Eventos
 linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
-searchButton.addEventListener("click", filterKitten);
+searchButton.addEventListener('click', filterKitten);
 buttonAdd.addEventListener("click", addNewKitten);
 buttonCancelForm.addEventListener("click", cancelNewKitten);
 
