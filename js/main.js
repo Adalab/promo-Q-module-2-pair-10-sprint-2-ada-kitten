@@ -37,7 +37,7 @@ const kittenData_3 = {
     race: "British Shorthair",
 };
 
-const kittenDataList = [kittenData_1, kittenData_2, kittenData_3];
+let kittenDataList = [];
 
 //Funciones
 function renderKitten(kittenData) {
@@ -45,7 +45,7 @@ function renderKitten(kittenData) {
     <article>
       <img
         class="card_img"
-        src=${kittenData.image}
+        src=${kittenData.url}
         alt="gatito"
       />
       <h3 class="card_title">${kittenData.name}</h3>
@@ -87,14 +87,14 @@ function addNewKitten(event) {
     event.preventDefault();
     let newKittenDataObject = {
         desc: inputDesc.value,
-        image: inputPhoto.value,
+        url: inputPhoto.value,
         name: inputName.value,
         race: inputRace.value,
     }
-    if (newKittenDataObject.desc === "" || newKittenDataObject.image === "" || newKittenDataObject.name === "") {
+    if (newKittenDataObject.desc === "" || newKittenDataObject.url === "" || newKittenDataObject.name === "") {
         labelMesageError.innerHTML = "Debe rellenar todos los valores";
     } else {
-        if (newKittenDataObject.desc !== "" && newKittenDataObject.image !== "" && newKittenDataObject.name !== "") {
+        if (newKittenDataObject.desc !== "" && newKittenDataObject.url !== "" && newKittenDataObject.name !== "") {
             labelMesageError.innerHTML = "";
             newKitten(newKittenDataObject);
         }
@@ -150,6 +150,24 @@ buttonCancelForm.addEventListener("click", cancelNewKitten);
 
 
 
+const GITHUB_USER = 'olguita2412';
+const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
 
+fetch(SERVER_URL, {
+    method: 'GET',
+    headers: {'Content-Type': 'application/json'},
+  }).then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    kittenDataList = data.results;
+    console.log(kittenDataList);
+    renderKittenList(kittenDataList);
+  });
+  
+  
+  
+       
+       
 
 
