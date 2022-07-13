@@ -137,8 +137,6 @@ function filterKitten(event) {
     renderKittenList(filterCats);
 }
 
-
-
 //Mostrar el litado de gatitos en ell HTML
 renderKittenList(kittenDataList); 
 
@@ -153,21 +151,28 @@ buttonCancelForm.addEventListener("click", cancelNewKitten);
 const GITHUB_USER = 'olguita2412';
 const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
 
-fetch(SERVER_URL, {
-    method: 'GET',
-    headers: {'Content-Type': 'application/json'},
-  }).then(function (response) {
-    return response.json();
-  })
-  .then(function (data) {
-    kittenDataList = data.results;
-    console.log(kittenDataList);
-    renderKittenList(kittenDataList);
-  });
-  
-  
-  
-       
-       
 
+  // Almacenamiento de gatitos
 
+const kittenListStored = JSON.parse(localStorage.getItem('kittenList'));
+
+if (kittenListStored === null){
+    fetch(SERVER_URL, {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json'},
+      }).then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        kittenDataList = data.results;
+        console.log(kittenDataList);
+        renderKittenList(kittenDataList);
+        const kittenListStorage = localStorage.setItem('kittenList', JSON.stringify(kittenDataList));
+        console.log(kittenListStorage);
+      });
+    
+}
+else {
+    renderKittenList(kittenListStored);
+    
+}
