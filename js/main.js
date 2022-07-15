@@ -82,6 +82,7 @@ function renderKitten(kittenData) {
 
 
 function renderKittenList(kittenDataList) {
+    listElement.innerHTML = '';
     for (const kittenItem of kittenDataList) {
         listElement.appendChild(renderKitten(kittenItem));
     }
@@ -125,19 +126,18 @@ function addNewKitten(event) {
                 body: JSON.stringify(newKittenDataObject),
 })
                 .then((response) => response.json())
-                .then((data) => {
+                .then((data) => 
+                {console.log(data);
                     if (data.success) {
+
                         kittenDataList.push(newKittenDataObject);
-                        const kittenListStorage = localStorage.setItem('kittenList', JSON.stringify(kittenDataList));
+                        console.log(kittenDataList);
+                        localStorage.setItem('kittenList', JSON.stringify(kittenDataList));
                         renderKittenList(kittenDataList);
                         emptyInputs();
-      //Completa y/o modifica el código:
-      //Agrega el nuevo gatito al listado
-      //Guarda el listado actualizado en el local stoarge
-      //Visualiza nuevamente el listado de gatitos
-      //Limpia los valores de cada input
+                        
                      } else {
-                        labelMesageError.innerHTML = "Debe rellenar todos los valores";
+                        labelMesageError.innerHTML = 'Debe rellenar todos los valores';
                     }
                 });
         }
@@ -161,7 +161,7 @@ function emptyInputs() {
 //Cancelar la búsqueda de un gatito
 function cancelNewKitten(event) {
     event.preventDefault();
-    newFormElement.classList.add("collapsed");
+    newFormElement.classList.add('collapsed');
     inputDesc.value = "";
     inputPhoto.value = "";
     inputName.value = "";
@@ -184,14 +184,14 @@ function filterKitten(event) {
 renderKittenList(kittenDataList); 
 
 //Eventos
-linkNewFormElememt.addEventListener("click", handleClickNewCatForm);
+linkNewFormElememt.addEventListener('click', handleClickNewCatForm);
 searchButton.addEventListener('click', filterKitten);
-buttonAdd.addEventListener("click", addNewKitten);
-buttonCancelForm.addEventListener("click", cancelNewKitten);
+buttonAdd.addEventListener('click', addNewKitten);
+buttonCancelForm.addEventListener('click', cancelNewKitten);
 
 
 
-const GITHUB_USER = 'saramonzon22';
+const GITHUB_USER = 'olguita2412';
 const SERVER_URL = `https://adalab-api.herokuapp.com/api/kittens/${GITHUB_USER}`;
 
 
@@ -210,8 +210,8 @@ if (kittenListStored === null){
         kittenDataList = data.results;
         console.log(kittenDataList);
         renderKittenList(kittenDataList);
-        const kittenListStorage = localStorage.setItem('kittenList', JSON.stringify(kittenDataList));
-        console.log(kittenListStorage);
+        localStorage.setItem('kittenList', JSON.stringify(kittenDataList));
+        
       });
     
 }
